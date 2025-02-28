@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwepks747e6xo"]
+
+[ext_resource type="Script" path="res://Character/CameraController.gd" id="1_oquqt"]
+
+[node name="CameraController" type="Node3D" groups=["CameraController"]]
+script = ExtResource("1_oquqt")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.491298, 0)
+collision_mask = 2
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.63586, 3.98962)
+current = true
+
+[node name="LookAt" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2, -3)

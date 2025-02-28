@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcbq4hhi73yta"]
+
+[ext_resource type="Script" path="res://Terrain/gWorld.gd" id="1_kld43"]
+[ext_resource type="PackedScene" uid="uid://cvpsru1h2y67u" path="res://Character/character.tscn" id="2_2g0ky"]
+[ext_resource type="FastNoiseLite" uid="uid://78ftecjj4o0l" path="res://Terrain/terrain_noise.tres" id="2_3rrhe"]
+[ext_resource type="PackedScene" uid="uid://dwepks747e6xo" path="res://Camera.tscn" id="3_r0lrm"]
+
+[sub_resource type="Environment" id="Environment_12i1j"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u4531"]
+
+[node name="Level" type="Node3D"]
+
+[node name="World" type="Node" parent="."]
+script = ExtResource("1_kld43")
+draw_distance = 3
+noise = ExtResource("2_3rrhe")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_12i1j")
+camera_attributes = SubResource("CameraAttributesPractical_u4531")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+directional_shadow_mode = 0
+
+[node name="Debug_Character" parent="." groups=["actor"] instance=ExtResource("2_2g0ky")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11714, 27.0921, 4.734)
+toggle_gravity = false
+
+[node name="CameraController" parent="." instance=ExtResource("3_r0lrm")]

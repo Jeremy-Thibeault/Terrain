@@ -1,0 +1,43 @@
+[gd_scene load_steps=10 format=3 uid="uid://bj66pqigf406y"]
+
+[ext_resource type="Script" path="res://Terrain/gChunk.gd" id="1_4wsx8"]
+[ext_resource type="Texture2D" uid="uid://detrhupniofy6" path="res://Terrain/terrain_gradient.tres" id="2_mrl3g"]
+[ext_resource type="Shader" path="res://shaders/gChunk.gdshader" id="2_tg81y"]
+[ext_resource type="Texture2D" uid="uid://bg620ia6lii8i" path="res://Terrain/terrain_normal.tres" id="3_l6t72"]
+[ext_resource type="FastNoiseLite" uid="uid://78ftecjj4o0l" path="res://Terrain/terrain_noise.tres" id="3_leexj"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rkxgi"]
+width = 1024
+height = 1024
+noise = ExtResource("3_leexj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvdyb"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_tg81y")
+shader_parameter/normal_map = ExtResource("3_l6t72")
+shader_parameter/gradient = ExtResource("2_mrl3g")
+shader_parameter/noise = SubResource("NoiseTexture2D_rkxgi")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8vgs2"]
+size = Vector2(10, 10)
+subdivide_width = 9
+subdivide_depth = 9
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h0gec"]
+
+[node name="gChunkVis" type="MeshInstance3D" groups=["tile"]]
+material_override = SubResource("ShaderMaterial_wvdyb")
+mesh = SubResource("PlaneMesh_8vgs2")
+script = ExtResource("1_4wsx8")
+
+[node name="gChunkArea" type="Area3D" parent="."]
+
+[node name="gChunkVolume" type="CollisionShape3D" parent="gChunkArea"]
+shape = SubResource("BoxShape3D_h0gec")
+
+[node name="gChunkStaticBody" type="StaticBody3D" parent="."]
+
+[node name="gChunkCollShape" type="CollisionShape3D" parent="gChunkStaticBody"]
+
+[connection signal="body_shape_entered" from="gChunkArea" to="." method="_on_chunk_entered"]
